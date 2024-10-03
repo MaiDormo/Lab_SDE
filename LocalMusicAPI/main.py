@@ -2,16 +2,14 @@ from fastapi import FastAPI, Response, status
 import os
 import subprocess
 
-app = FastAPI()
+app = FastAPI() 
 
 # Da sistemare cosa ritorna, deve essere un json
 @app.get("/list-music", status_code=200)
 def listMusic():
     retVal = ""
     arr = os.listdir("./Music")
-    for name in arr:
-        retVal += name + "\n"
-    return {retVal}
+    return {"list-music": arr}
 
 @app.get("/request-music", status_code=200)
 def retrieveMusic(songName: str, dstPath: str, response: Response):
