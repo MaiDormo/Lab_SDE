@@ -2,9 +2,14 @@ import neuralspace as ns
 import requests
 import os
 
-STT_API_KEY = os.environ.get('STT_API_KEY')
-IMG_SEARCH_API_KEY = os.environ.get('IMG_SEARCH_API_KEY')
-CX = os.environ.get('CX')
+# STT_API_KEY = os.environ.get('STT_API_KEY')
+# IMG_SEARCH_API_KEY = os.environ.get('IMG_SEARCH_API_KEY')
+# CX = os.environ.get('CX')
+
+STT_API_KEY = "sk_a58a31d32bed7896a38ea55fa93fe8a1d709851e37e38c67e163c6004c9a0186"
+IMG_SEARCH_API_KEY= "AIzaSyAevW4pAAiZRODwx0nlhTGjVNZaJyB1Yl8"
+CX= "f0e530b997279403d"
+
 
 # Define endpoint and filename
 GOOGLE_SEARCH_URL = "https://www.googleapis.com/customsearch/v1"
@@ -39,7 +44,8 @@ def perform_image_search(query):
         "cx": CX,
         "q": query,
         "searchType": "image",
-        "num": 1
+        "num": 1,
+        "fileType": "png"
     }
     response = requests.get(GOOGLE_SEARCH_URL, params=params)
     if response.status_code == 200:
