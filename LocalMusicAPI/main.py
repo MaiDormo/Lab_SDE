@@ -15,7 +15,7 @@ def listMusic():
 def retrieveMusic(songName: str, dstPath: str, response: Response):
     if os.path.isfile("./Music/" + songName + ".mp3"):
         if os.path.isdir(dstPath):
-            subprocess.run("cp ./Music/" + songName + ".mp3 " + dstPath + "/" + songName + ".mp3", shell = True, executable="/bin/bash")
+            subprocess.run("cp ./Music/" + songName + ".mp3 " + dstPath + "/song.mp3", shell = True, executable="/bin/bash")
         else:
             response.status_code = status.HTTP_404_NOT_FOUND
             return {404}
