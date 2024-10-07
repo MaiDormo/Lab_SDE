@@ -34,47 +34,51 @@ class ModernMusicApp:
         self.create_widgets()
 
     def create_widgets(self):
+        # Create a center frame
+        center_frame = ttk.Frame(self.root, padding="20")
+        center_frame.pack(expand=True)
+        
         # Main container
-        main_frame = ttk.Frame(self.root, padding="20")
-        main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        main_frame = ttk.Frame(center_frame, padding="20")
+        main_frame.pack()
         
         # Step 1: Show available songs
-        step1_frame = self.create_section_frame(main_frame, "Step 1: Available Songs", 0)
-        ttk.Button(step1_frame, text="Show Songs", command=self.show_songs).grid(row=0, column=0, pady=5)
+        step1_frame = self.create_section_frame(main_frame, "Step 1: Available Songs")
+        ttk.Button(step1_frame, text="Show Songs", command=self.show_songs).pack(pady=5)
         self.song_listbox = tk.Listbox(step1_frame, height=5, width=40, font=('Helvetica', 10))
-        self.song_listbox.grid(row=1, column=0, pady=5)
+        self.song_listbox.pack(pady=5)
         
         # Step 2: Import song
-        step2_frame = self.create_section_frame(main_frame, "Step 2: Import Song", 1)
+        step2_frame = self.create_section_frame(main_frame, "Step 2: Import Song")
         entry_frame = ttk.Frame(step2_frame)
-        entry_frame.grid(row=0, column=0, pady=5)
+        entry_frame.pack(pady=5)
         self.song_entry = ttk.Entry(entry_frame, width=30, font=('Helvetica', 10))
-        self.song_entry.grid(row=0, column=0, padx=5)
-        ttk.Button(entry_frame, text="Import", command=self.import_song).grid(row=0, column=1, padx=5)
+        self.song_entry.pack(side=tk.LEFT, padx=5)
+        ttk.Button(entry_frame, text="Import", command=self.import_song).pack(side=tk.LEFT, padx=5)
         self.import_status = ttk.Label(step2_frame, text="", font=('Helvetica', 10))
-        self.import_status.grid(row=1, column=0, pady=5)
+        self.import_status.pack(pady=5)
         
         # Step 3: Extract text
-        step3_frame = self.create_section_frame(main_frame, "Step 3: Extract Text", 2)
-        ttk.Button(step3_frame, text="Extract Text", command=self.extract_text).grid(row=0, column=0, pady=5)
+        step3_frame = self.create_section_frame(main_frame, "Step 3: Extract Text")
+        ttk.Button(step3_frame, text="Extract Text", command=self.extract_text).pack(pady=5)
         self.text_display = tk.Text(step3_frame, height=4, width=40, font=('Helvetica', 10), wrap=tk.WORD)
-        self.text_display.grid(row=1, column=0, pady=5)
+        self.text_display.pack(pady=5)
         
         # Step 4: Search image
-        step4_frame = self.create_section_frame(main_frame, "Step 4: Search Image", 3)
-        ttk.Button(step4_frame, text="Search Image", command=self.search_text).grid(row=0, column=0, pady=5)
+        step4_frame = self.create_section_frame(main_frame, "Step 4: Search Image")
+        ttk.Button(step4_frame, text="Search Image", command=self.search_text).pack(pady=5)
         self.image_frame = ttk.Frame(step4_frame, width=400, height=300)
-        self.image_frame.grid(row=1, column=0, pady=10)
-        self.image_frame.grid_propagate(False)
+        self.image_frame.pack(pady=10)
+        self.image_frame.pack_propagate(False)
         self.image_label = ttk.Label(self.image_frame)
         self.image_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-    def create_section_frame(self, parent, title, row):
+    def create_section_frame(self, parent, title):
         frame = ttk.Frame(parent, padding="10")
-        frame.grid(row=row, column=0, sticky=(tk.W, tk.E), pady=10)
-        ttk.Label(frame, text=title, style='Header.TLabel').grid(row=0, column=0, sticky=tk.W, pady=(0, 10))
+        frame.pack(pady=10)
+        ttk.Label(frame, text=title, style='Header.TLabel').pack(anchor=tk.W, pady=(0, 10))
         content_frame = ttk.Frame(frame)
-        content_frame.grid(row=1, column=0)
+        content_frame.pack()
         return content_frame
 
     def show_songs(self):

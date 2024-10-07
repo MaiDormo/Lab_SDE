@@ -20,6 +20,9 @@ PythonGUI/images/*
 #song
 PythonGUI/song.mp3
 
+#log file
+LocalMusicAPI/log.txt
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
