@@ -93,10 +93,11 @@ class ModernMusicApp:
             return
         
         try:
-            current_folder = pathlib.Path(__file__).parent.resolve().as_posix()
-            ret_val = select_music.importSong(song_name, current_folder)
+            ret_val = select_music.importSong(song_name)
             
-            if ret_val == 0:
+            if ret_val != 1:
+                current_folder = pathlib.Path(__file__).parent.resolve().as_posix()
+                open(current_folder + '/song.mp3', 'wb').write(ret_val.content)
                 self.update_status(f"{song_name} successfully imported!", "green")
             else:
                 self.update_status(f"{song_name} does not exist!", "red")

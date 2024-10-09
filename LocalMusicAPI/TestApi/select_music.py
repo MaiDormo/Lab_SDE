@@ -1,11 +1,10 @@
 import requests
-URL = "http://127.0.0.1:8000/request-music"
+URL = "http://127.0.0.1:8000/request-music2"
 
-requestedSong = input()
-dstFolder = input()
+requestedSong = "BohemianRhapsody.mp3"
 
-PARAMS = {'songName':requestedSong, 'dstPath':dstFolder}
+PARAMS = {'songName':requestedSong}
 
 response = requests.get(URL, PARAMS)
 
-print(response.text)
+open('song.mp3', 'wb').write(response.content)
