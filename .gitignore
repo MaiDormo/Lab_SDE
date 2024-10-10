@@ -16,13 +16,11 @@ PythonGUI/APIs/__pycache__/
 #images
 PythonGUI/images/*
 
-
 #song
 PythonGUI/song.mp3
 
-#log file
-LocalMusicAPI/log.txt
-
+#tts audio
+PythonGUI/APIs/tts.mp3
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
