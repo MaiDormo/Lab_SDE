@@ -34,6 +34,7 @@ def create_transcription_job(vai, filename):
 # Extract words from transcription result
 def extract_transcription_words(result):
     timestamps = result['data']['result']['transcription']['channels']['0']['timestamps']
+    print(result)
     words = [entry['word'] for entry in timestamps]
     return " ".join(words)
 
@@ -50,6 +51,7 @@ def perform_image_search(query):
     response = requests.get(GOOGLE_SEARCH_URL, params=params)
     if response.status_code == 200:
         search_results = response.json()
+        print(search_results)
         if 'items' in search_results and search_results['items']:
             return search_results['items'][0]['link']
         else:

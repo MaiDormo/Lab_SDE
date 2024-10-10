@@ -1,16 +1,15 @@
-import datetime
 import tkinter as tk
 from tkinter import ttk
-import os, subprocess
 from PIL import ImageTk, Image
-from APIs import list_music, select_music, lab_SDE_2024
+from APIs import list_music, select_music, lab_SDE_2024, reproduce_text
 import pathlib
 
 class ModernMusicApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Music Processing App")
-        self.root.geometry('900x700')
+        screen_height = str(root.winfo_screenheight())
+        self.root.geometry('400x'+screen_height)
         self.root.configure(bg='#f0f0f0')
         
         self.style = ttk.Style()
@@ -59,6 +58,7 @@ class ModernMusicApp:
         ttk.Button(step3_frame, text="Extract Text", command=self.extract_text).grid(row=0, column=0, pady=5)
         self.text_display = tk.Text(step3_frame, height=4, width=40, font=('Helvetica', 10), wrap=tk.WORD)
         self.text_display.grid(row=1, column=0, pady=5)
+        ttk.Button(step3_frame, text="Reproduce Text", command=self.reproduce_text).grid(row=2, column=0, pady=5)
         
         # Step 4: Search image
         step4_frame = self.create_section_frame(main_frame, "Step 4: Search Image", 3)
@@ -126,7 +126,8 @@ class ModernMusicApp:
             
             image_url = lab_SDE_2024.perform_image_search(text)
             if image_url:
-                image_save_path = os.path.join("images", "downloaded_image.png")
+                current_folder = pathlib.Path(__file__).parent.resolve().as_posix()
+                image_save_path = current_folder+"/images/downloaded_image.png"
                 lab_SDE_2024.download_image(image_url, image_save_path)
                 self.display_image(image_save_path)
         except Exception as e:
@@ -143,11 +144,21 @@ class ModernMusicApp:
         except Exception as e:
             print(f"Error displaying image: {str(e)}")
 
+    def reproduce_text(self):
+        text = self.text_display.get(1.0, tk.END).strip()
+        if not text:
+            return
+        
+        reproduce_text.reproduce_text(text)
+
+    def api_composition():
+        # Step 1: Import the song written in the textarea above
+        return
+
     def update_status(self, message, color):
         self.import_status.config(text=message, foreground=color)
 
 def main():
-    
     root = tk.Tk()
     app = ModernMusicApp(root)
     root.mainloop()
