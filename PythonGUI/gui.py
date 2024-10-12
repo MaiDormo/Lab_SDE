@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk, Image
 from music_app import MusicApp
-import pathlib
+
 
 class ModernMusicApp:
     def __init__(self, root):
@@ -61,6 +61,9 @@ class ModernMusicApp:
         ttk.Button(step1_frame, text="Show Songs", command=self.show_songs).pack(pady=5)
         self.song_listbox = tk.Listbox(step1_frame, height=7, width=40, font=('Helvetica', 10))
         self.song_listbox.pack(pady=5)
+
+        # Bind the listbox selection event to update the text entry in Step 2
+        self.song_listbox.bind('<<ListboxSelect>>', self.on_song_select)
         
         # Step 2: Import song
         step2_frame = self.create_section_frame(main_frame, "Step 2: Import Song")
@@ -87,6 +90,26 @@ class ModernMusicApp:
         self.image_frame.pack_propagate(False)
         self.image_label = ttk.Label(self.image_frame)
         self.image_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        
+        # Button to trigger all steps sequentially
+        step5_frame = self.create_section_frame(main_frame, "Step 5: Run all previous Steps")
+        ttk.Button(step5_frame, text="Run", command=self.api_composition).pack(pady=20)
+
+    def api_composition(self):
+        # Step 1: Show available songs
+        self.show_songs()
+        
+        # Step 2: Import the song
+        self.root.after(1000, self.import_song)
+
+        # Step 3: Extract the text after a delay
+        self.root.after(2000, self.extract_text)
+
+        # Step 4: Search for image after a further delay
+        self.root.after(3000, self.search_text)
+
+        # Step 5: Reproduce the extracted text
+        self.root.after(4000, self.reproduce_text)
 
     def create_section_frame(self, parent, title):
         frame = ttk.Frame(parent, padding="10")
@@ -104,6 +127,15 @@ class ModernMusicApp:
                 self.song_listbox.insert(tk.END, song)
         except Exception as e:
             self.song_listbox.insert(tk.END, f"Error: {str(e)}")
+
+    def on_song_select(self, event):
+        # Get the selected song from the listbox
+        selected_index = self.song_listbox.curselection()
+        if selected_index:
+            selected_song = self.song_listbox.get(selected_index)
+            # Update the song entry in Step 2 with the selected song
+            self.song_entry.delete(0, tk.END)
+            self.song_entry.insert(0, selected_song)
 
     def import_song(self):
         song_name = self.song_entry.get()
@@ -156,11 +188,7 @@ class ModernMusicApp:
         if not text:
             return
         
-        self.music_app.reproduce_text()
-
-    def api_composition():
-        # Step 1: Import the song written in the textarea above
-        return
+        self.music_app.reproduce_text(text)
 
     def update_status(self, message, color):
         self.import_status.config(text=message, foreground=color)
