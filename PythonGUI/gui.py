@@ -8,8 +8,7 @@ class ModernMusicApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Music Processing App")
-        screen_height = str(root.winfo_screenheight())
-        self.root.geometry('400x'+screen_height)
+        self.root.geometry(f'450x{root.winfo_screenheight()-200}')
         self.root.configure(bg='#f0f0f0')
         
         self.style = ttk.Style()
@@ -33,48 +32,67 @@ class ModernMusicApp:
         self.create_widgets()
 
     def create_widgets(self):
+        # Create a canvas with scrollbar
+        self.canvas = tk.Canvas(self.root, bg='#f0f0f0')
+        self.scrollbar = ttk.Scrollbar(self.root, orient="vertical", command=self.canvas.yview)
+        self.scrollable_frame = ttk.Frame(self.canvas)
+
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(
+                scrollregion=self.canvas.bbox("all")
+            )
+        )
+
+        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+
+        # Pack canvas and scrollbar
+        self.canvas.pack(side="left", fill="both", expand=True)
+        self.scrollbar.pack(side="right", fill="y")
+
         # Main container
-        main_frame = ttk.Frame(self.root, padding="20")
-        main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        main_frame = ttk.Frame(self.scrollable_frame, padding="20")
+        main_frame.pack(fill="both", expand=True)
         
         # Step 1: Show available songs
-        step1_frame = self.create_section_frame(main_frame, "Step 1: Available Songs", 0)
-        ttk.Button(step1_frame, text="Show Songs", command=self.show_songs).grid(row=0, column=0, pady=5)
+        step1_frame = self.create_section_frame(main_frame, "Step 1: Available Songs")
+        ttk.Button(step1_frame, text="Show Songs", command=self.show_songs).pack(pady=5)
         self.song_listbox = tk.Listbox(step1_frame, height=5, width=40, font=('Helvetica', 10))
-        self.song_listbox.grid(row=1, column=0, pady=5)
+        self.song_listbox.pack(pady=5)
         
         # Step 2: Import song
-        step2_frame = self.create_section_frame(main_frame, "Step 2: Import Song", 1)
+        step2_frame = self.create_section_frame(main_frame, "Step 2: Import Song")
         entry_frame = ttk.Frame(step2_frame)
-        entry_frame.grid(row=0, column=0, pady=5)
+        entry_frame.pack(pady=5)
         self.song_entry = ttk.Entry(entry_frame, width=30, font=('Helvetica', 10))
-        self.song_entry.grid(row=0, column=0, padx=5)
-        ttk.Button(entry_frame, text="Import", command=self.import_song).grid(row=0, column=1, padx=5)
+        self.song_entry.pack(side="left", padx=5)
+        ttk.Button(entry_frame, text="Import", command=self.import_song).pack(side="left", padx=5)
         self.import_status = ttk.Label(step2_frame, text="", font=('Helvetica', 10))
-        self.import_status.grid(row=1, column=0, pady=5)
+        self.import_status.pack(pady=5)
         
         # Step 3: Extract text
-        step3_frame = self.create_section_frame(main_frame, "Step 3: Extract Text", 2)
-        ttk.Button(step3_frame, text="Extract Text", command=self.extract_text).grid(row=0, column=0, pady=5)
+        step3_frame = self.create_section_frame(main_frame, "Step 3: Extract Text")
+        ttk.Button(step3_frame, text="Extract Text", command=self.extract_text).pack(pady=5)
         self.text_display = tk.Text(step3_frame, height=4, width=40, font=('Helvetica', 10), wrap=tk.WORD)
-        self.text_display.grid(row=1, column=0, pady=5)
-        ttk.Button(step3_frame, text="Reproduce Text", command=self.reproduce_text).grid(row=2, column=0, pady=5)
+        self.text_display.pack(pady=5)
+        ttk.Button(step3_frame, text="Reproduce Text", command=self.reproduce_text).pack(pady=5)
         
         # Step 4: Search image
-        step4_frame = self.create_section_frame(main_frame, "Step 4: Search Image", 3)
-        ttk.Button(step4_frame, text="Search Image", command=self.search_text).grid(row=0, column=0, pady=5)
+        step4_frame = self.create_section_frame(main_frame, "Step 4: Search Image")
+        ttk.Button(step4_frame, text="Search Image", command=self.search_text).pack(pady=5)
         self.image_frame = ttk.Frame(step4_frame, width=400, height=300)
-        self.image_frame.grid(row=1, column=0, pady=10)
-        self.image_frame.grid_propagate(False)
+        self.image_frame.pack(pady=10)
+        self.image_frame.pack_propagate(False)
         self.image_label = ttk.Label(self.image_frame)
         self.image_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-    def create_section_frame(self, parent, title, row):
+    def create_section_frame(self, parent, title):
         frame = ttk.Frame(parent, padding="10")
-        frame.grid(row=row, column=0, sticky=(tk.W, tk.E), pady=10)
-        ttk.Label(frame, text=title, style='Header.TLabel').grid(row=0, column=0, sticky=tk.W, pady=(0, 10))
+        frame.pack(fill="x", pady=10)
+        ttk.Label(frame, text=title, style='Header.TLabel').pack(anchor="w", pady=(0, 10))
         content_frame = ttk.Frame(frame)
-        content_frame.grid(row=1, column=0)
+        content_frame.pack(fill="x")
         return content_frame
 
     def show_songs(self):
