@@ -74,4 +74,6 @@ coverage.xml
 docs/_build/
 
 
-
+#testing
+PythonGUI/gui_new.py
+launch_app2.sh

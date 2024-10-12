@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Response, status
 from fastapi.responses import FileResponse
 import os
-import subprocess
 import uvicorn
 import pathlib
 

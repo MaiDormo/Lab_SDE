@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk, Image
-from APIs import list_music, select_music, lab_SDE_2024, reproduce_text
+from music_app import MusicApp
 import pathlib
 
 class ModernMusicApp:
@@ -29,6 +29,7 @@ class ModernMusicApp:
         self.style.configure('Header.TLabel', 
                             font=('Helvetica', 14, 'bold'))
         
+        self.music_app =  MusicApp()
         self.create_widgets()
 
     def create_widgets(self):
@@ -58,7 +59,7 @@ class ModernMusicApp:
         # Step 1: Show available songs
         step1_frame = self.create_section_frame(main_frame, "Step 1: Available Songs")
         ttk.Button(step1_frame, text="Show Songs", command=self.show_songs).pack(pady=5)
-        self.song_listbox = tk.Listbox(step1_frame, height=5, width=40, font=('Helvetica', 10))
+        self.song_listbox = tk.Listbox(step1_frame, height=7, width=40, font=('Helvetica', 10))
         self.song_listbox.pack(pady=5)
         
         # Step 2: Import song
@@ -98,7 +99,7 @@ class ModernMusicApp:
     def show_songs(self):
         self.song_listbox.delete(0, tk.END)
         try:
-            songs = list_music.listAvailableMusic()
+            songs = self.music_app.list_available_music()
             for song in songs:
                 self.song_listbox.insert(tk.END, song)
         except Exception as e:
@@ -110,12 +111,8 @@ class ModernMusicApp:
             self.update_status("Please enter a song name", "red")
             return
         
-        try:
-            ret_val = select_music.importSong(song_name)
-            
-            if ret_val != 1:
-                current_folder = pathlib.Path(__file__).parent.resolve().as_posix()
-                open(current_folder + '/song.mp3', 'wb').write(ret_val.content)
+        try: 
+            if self.music_app.import_song(song_name):
                 self.update_status(f"{song_name} successfully imported!", "green")
             else:
                 self.update_status(f"{song_name} does not exist!", "red")
@@ -123,13 +120,8 @@ class ModernMusicApp:
             self.update_status(f"Error: {str(e)}", "red")
 
     def extract_text(self):
-        current_folder = pathlib.Path(__file__).parent.resolve().as_posix()
         try:
-            vai = lab_SDE_2024.initialize_voice_ai()
-            job_id = lab_SDE_2024.create_transcription_job(vai, current_folder + "/song.mp3")
-            result = vai.poll_until_complete(job_id)
-            song_text = lab_SDE_2024.extract_transcription_words(result)
-            
+            song_text = self.music_app.extract_text()
             self.text_display.delete(1.0, tk.END)
             self.text_display.insert(tk.END, song_text)
         except Exception as e:
@@ -142,12 +134,9 @@ class ModernMusicApp:
             if not text:
                 return
             
-            image_url = lab_SDE_2024.perform_image_search(text)
-            if image_url:
-                current_folder = pathlib.Path(__file__).parent.resolve().as_posix()
-                image_save_path = current_folder+"/images/downloaded_image.png"
-                lab_SDE_2024.download_image(image_url, image_save_path)
-                self.display_image(image_save_path)
+            image_path = self.music_app.search_and_download_image(text)
+            if image_path:
+                self.display_image(image_path)
         except Exception as e:
             print(f"Error searching/displaying image: {str(e)}")
 
@@ -167,7 +156,7 @@ class ModernMusicApp:
         if not text:
             return
         
-        reproduce_text.reproduce_text(text)
+        self.music_app.reproduce_text()
 
     def api_composition():
         # Step 1: Import the song written in the textarea above
