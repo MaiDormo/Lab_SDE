@@ -109,7 +109,7 @@ class ModernMusicApp:
         self.root.after(3000, self.search_text)
 
         # Step 5: Reproduce the extracted text
-        self.root.after(4000, self.reproduce_text)
+        # self.root.after(4000, self.reproduce_text)
 
     def create_section_frame(self, parent, title):
         frame = ttk.Frame(parent, padding="10")
