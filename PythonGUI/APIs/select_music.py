@@ -1,7 +1,9 @@
 import requests
+from fastapi.responses import FileResponse 
+
 URL = "http://127.0.0.1:8000/request-music"
 
-def importSong(requestedSong):
+def importSong(requestedSong) -> (FileResponse | int):
     PARAMS = {'songName':requestedSong}
     response = requests.get(URL, PARAMS)
     if response.status_code == 200:

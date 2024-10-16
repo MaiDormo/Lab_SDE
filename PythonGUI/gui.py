@@ -78,7 +78,7 @@ class ModernMusicApp:
         # Step 3: Extract text
         step3_frame = self.create_section_frame(main_frame, "Step 3: Extract Text")
         ttk.Button(step3_frame, text="Extract Text", command=self.extract_text).pack(pady=5)
-        self.text_display = tk.Text(step3_frame, height=4, width=40, font=('Helvetica', 10), wrap=tk.WORD)
+        self.text_display = tk.Text(step3_frame, height=4, width=40, font=('Helvetica', 10), wrap=tk.WORD, state='disabled')
         self.text_display.pack(pady=5)
         ttk.Button(step3_frame, text="Reproduce Text", command=self.reproduce_text).pack(pady=5)
         
@@ -154,11 +154,15 @@ class ModernMusicApp:
     def extract_text(self):
         try:
             song_text = self.music_app.extract_text()
+            self.text_display.config(state='normal')  # Temporarily enable the widget
             self.text_display.delete(1.0, tk.END)
             self.text_display.insert(tk.END, song_text)
+            self.text_display.config(state='disabled')  # Disable the widget again
         except Exception as e:
+            self.text_display.config(state='normal')  # Temporarily enable the widget
             self.text_display.delete(1.0, tk.END)
             self.text_display.insert(tk.END, f"Error: {str(e)}")
+            self.text_display.config(state='disabled')  # Disable the widget again
 
     def search_text(self):
         try:

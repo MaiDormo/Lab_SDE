@@ -10,7 +10,7 @@ GOOGLE_SEARCH_URL = "https://www.googleapis.com/customsearch/v1"
 
 
 # Perform Google image search based on transcribed text
-def perform_image_search(query):
+def perform_image_search(query: str) -> (str | None):
     params = {
         "key": IMG_SEARCH_API_KEY,
         "cx": CX,
