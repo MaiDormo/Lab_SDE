@@ -100,7 +100,7 @@ class ModernMusicApp:
         self.show_songs()
         
         # Step 2: Import the song
-        self.root.after(1000, self.import_song)
+        self.root.after(1000, self.import_song_run_all)
 
         # Step 3: Extract the text after a delay
         self.root.after(2000, self.extract_text)
@@ -142,6 +142,24 @@ class ModernMusicApp:
         if not song_name:
             self.update_status("Please enter a song name", "red")
             return
+        
+        try: 
+            if self.music_app.import_song(song_name):
+                self.update_status(f"{song_name} successfully imported!", "green")
+            else:
+                self.update_status(f"{song_name} does not exist!", "red")
+        except Exception as e:
+            self.update_status(f"Error: {str(e)}", "red")
+
+    """Function used when calling the run all action"""
+    def import_song_run_all(self):
+
+        song_name = "ShapeOfYou.mp3"
+
+        #--- ui logic in order to fake selection ---
+        self.song_entry.delete(0, tk.END)
+        self.song_entry.insert(0, song_name)
+        #-------------------------------------------
         
         try: 
             if self.music_app.import_song(song_name):

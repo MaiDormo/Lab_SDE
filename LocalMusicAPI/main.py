@@ -13,7 +13,7 @@ app = FastAPI()
 @app.get("/list-music", status_code=200)
 def listMusic() -> dict[str, list[str]]:
     currentDir = pathlib.Path(__file__).parent.resolve().as_posix()
-    arr = os.listdir(currentDir+"/Music")
+    arr = os.listdir(currentDir + MUSIC_FOLDER)
     return {"list-music": arr}
 
 @app.get("/request-music", status_code=200, response_model=None)
