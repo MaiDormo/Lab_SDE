@@ -1,5 +1,5 @@
 import neuralspace as ns
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 # API key for STT
 STT_API_KEY: str = "sk_a58a31d32bed7896a38ea55fa93fe8a1d709851e37e38c67e163c6004c9a0186"
