@@ -79,3 +79,6 @@ PythonGUI/gui_new.py
 launch_app2.sh
 
 sde
+
+#remove if need to update song
+*.mp3

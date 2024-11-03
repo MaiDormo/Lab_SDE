@@ -1,8 +1,8 @@
 import os
 import requests
 
-"""Download the image from the provided URL in the save_path folder"""
 def download_image(image_url: str, save_path: str):
+    """Download the image from the provided URL in the save_path folder"""
     try:
         img_data = requests.get(image_url).content
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
