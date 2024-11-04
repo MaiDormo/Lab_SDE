@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .venv/
 
 
@@ -77,5 +78,8 @@ docs/_build/
 #testing
 PythonGUI/gui_new.py
 launch_app2.sh
-my_launch_app.sh
+
 sde
+
+#remove if need to update song
+*.mp3
