@@ -17,7 +17,7 @@ def perform_image_search(query: str) -> (str | None):
         "q": query,
         "searchType": "image",
         "num": 1,
-        "fileType": "png"
+        "fileType": "jpg"
     }
     response = requests.get(GOOGLE_SEARCH_URL, params=params)
     if response.status_code == 200:
