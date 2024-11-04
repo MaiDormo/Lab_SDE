@@ -21,12 +21,17 @@ from APIs import download_image, image_search, list_music, select_music
 # ----------------------------------------------------------------------------------------------------------------------------------------------
 
 # And the following constants which are used to specify the paths of songs and images
-SONG_PATH = pathlib.Path(__file__).parent.resolve().as_posix()
-IMAGE_PATH = SONG_PATH + "/images/downloaded_image.png"
+SONG_PATH = pathlib.Path(__file__).parent.resolve().as_posix() # Represent the folder location to which the song will be exported to.
+IMAGE_PATH = SONG_PATH + "/images/downloaded_image.png" # Represent the template path were the image will be downloaded
 
+
+
+"""
+In LAB Exercise:
+    - you need to add the underlined two lines of code in order to make the whole main function work,
+    thus completing all of the APIs calls shown before.
+"""
 def main():
-
-
     song_list = list_music.listAvailableMusic() #this function can be found inside APIs/list_music.py
     print(song_list)
     selected_song: FileResponse = select_music.importSong(song_list[0]) #this function can be found inside APIs/select_music.py
