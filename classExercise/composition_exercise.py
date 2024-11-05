@@ -3,9 +3,6 @@ import os
 from API_Output_Manipulation import functions
 from fastapi.responses import FileResponse
 import pathlib
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../PythonGUI/")))
-
-# Import the APIs module
 from APIs import download_image, image_search, list_music, select_music
 
 # You have available the following functions
