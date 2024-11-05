@@ -9,15 +9,15 @@ CX= "f0e530b997279403d"
 GOOGLE_SEARCH_URL = "https://www.googleapis.com/customsearch/v1"
 
 
-# Perform Google image search based on transcribed text
 def perform_image_search(query: str) -> (str | None):
+    """ Perform Google image search based on transcribed text """
     params = {
         "key": IMG_SEARCH_API_KEY,
         "cx": CX,
         "q": query,
         "searchType": "image",
         "num": 1,
-        "fileType": "png"
+        "fileType": "jpg"
     }
     response = requests.get(GOOGLE_SEARCH_URL, params=params)
     if response.status_code == 200:
