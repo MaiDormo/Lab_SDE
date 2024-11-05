@@ -102,10 +102,6 @@ class ModernMusicApp:
         step5_frame = self.create_section_frame(main_frame, "Step 5: Run all previous Steps")
         ttk.Button(step5_frame, text="Run", command=self.api_composition).pack(pady=20)
 
-        # Clear Extracted Song
-        util_frame = self.create_section_frame(main_frame, "Util: Clear Extracted Song")
-        ttk.Button(util_frame, text="Clear", command=self.clear_extracted_song).pack(pady=5)
-
     def api_composition(self):
         # Step 1: Show available songs
         self.show_songs()
@@ -228,9 +224,6 @@ class ModernMusicApp:
 
     def clear_extracted_song(self):
         self.music_app.clear_extracted_song()
-        self.text_display.config(state='normal')
-        self.text_display.delete(1.0, tk.END)
-        self.text_display.config(state='disabled')
 
 def main():
     root = tk.Tk()
