@@ -32,17 +32,27 @@ In LAB Exercise:
     thus completing all of the APIs calls shown before.
 """
 def main():
-    song_list = list_music.listAvailableMusic() #this function can be found inside APIs/list_music.py
+    song_list = list_music.listAvailableMusic() #this function can be found inside PythonGUI/APIs/select_music.py
     print(song_list)
-    selected_song: FileResponse = select_music.importSong(song_list[0]) #this function can be found inside APIs/select_music.py
-    # insert the call to the function extract_song which can be found inside the functions.py file
-    # insert the call to the function speech_to_text which can be found inside the functions.py file
-    url = image_search.perform_image_search(song_text) #this function can be found inside APIs/image_search.py
-    print(url)
-    download_image.download_image(url,IMAGE_PATH) #this function can be found inside APIs/download_image.py
-    print("finito, so nice!")
 
-    # Line that are should be added by the student
+    selected_song: FileResponse = select_music.importSong(song_list[0]) #this function can be found inside PythonGUI/APIs/select_music.py
+
+    # Insert a call to the function extract_song() which can be found inside the functions.py file
+    # It takes as input a song: FileResponse and the SONG_PATH, and returns a filename
+    # ----------------------------------------- WRITE HERE --------------------------------------------------
+
+    # Insert a call to the function speech_to_text() which can be found inside the API_Output_Manipulation/functions.py file
+    # It takes as input a SONG_PATH and the name (filename) of a song, returning the text of the song (song_text)
+    # ----------------------------------------- WRITE HERE --------------------------------------------------
+
+    url = image_search.perform_image_search(song_text) #this function can be found inside PythonGUI/APIs/select_music.py
+    print(url)
+
+    download_image.download_image(url,IMAGE_PATH) #this function can be found inside PythonGUI/APIs/select_music.py
+
+    print("Process completed!")
+
+    # Line that should be added by the student
     # filename = functions.extract_song(selected_song, SONG_PATH)
     # song_text = functions.speech_to_text(SONG_PATH, filename)
 

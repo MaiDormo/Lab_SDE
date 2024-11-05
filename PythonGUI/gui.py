@@ -2,7 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk, Image
 from music_app import MusicApp
-
+# import os
+# import pathlib
 
 class ModernMusicApp:
     def __init__(self, root):
@@ -31,6 +32,12 @@ class ModernMusicApp:
         
         self.music_app =  MusicApp()
         self.create_widgets()
+
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+    def on_closing(self):
+        self.clear_extracted_song()
+        self.root.destroy()
 
     def create_widgets(self):
         # Create a canvas with scrollbar
