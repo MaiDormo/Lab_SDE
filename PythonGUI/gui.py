@@ -47,7 +47,7 @@ class ModernMusicApp:
 
         self.scrollable_frame.bind(
             "<Configure>",
-            lambda e: self.canvas.configure(
+            lambda _: self.canvas.configure(
                 scrollregion=self.canvas.bbox("all")
             )
         )
