@@ -7,12 +7,11 @@ def perform_image_search(query: str) -> (str | None):
     try:
         results = DDGS().images(
                 keywords=query,
-                region="wt-wt",
                 safesearch="moderate",
-                max_results=1,
+                max_results=1,  
             )
     except:
         print("Error in requesting the image")
 
-    return results
+    return results[0]["image"]
     
