@@ -8,7 +8,7 @@ class MusicApp:
 
     def __init__(self):
         self.current_folder = pathlib.Path(__file__).parent.resolve()
-        self.last_extracted_song = ""
+        self.extracted_song = ""
 
     def list_available_music(self):
         return list_music.listAvailableMusic()
@@ -17,18 +17,17 @@ class MusicApp:
         ret_val = select_music.importSong(song_name)
         
         # Generate a unique filename based on the song name
-        filename = hashlib.md5(song_name.encode()).hexdigest()
-        self.last_extracted_song = filename
-        
+        self.extracted_song = hashlib.md5(song_name.encode()).hexdigest()
+
         if ret_val != 1:
-            with open(f"{self.current_folder.as_posix()}/{filename}.mp3", "wb") as f:
+            with open(f"{self.current_folder.as_posix()}/{self.extracted_song}.mp3", "wb") as f:
                 f.write(ret_val.content)
             return True
         return False
     
     def extract_text(self):
         vai = speech_to_text.initialize_voice_ai()
-        job_id = speech_to_text.create_transcription_job(vai, f"{self.current_folder.as_posix()}/{self.last_extracted_song}.mp3")
+        job_id = speech_to_text.create_transcription_job(vai, f"{self.current_folder.as_posix()}/{self.extracted_song}.mp3")
         result = vai.poll_until_complete(job_id)
         return speech_to_text.extract_transcription_words(result)
 
@@ -48,7 +47,7 @@ class MusicApp:
             Note a song need to be imported in order to call this song"""
         
         # Check if the list of extracted songs is empty
-        if self.last_extracted_song == "":
+        if self.extracted_song == "":
             return
               
         # Original loop with additional debugging
@@ -60,4 +59,4 @@ class MusicApp:
                     print(f"Failed to remove {element}: {e}")
         
         # Reset the string value
-        self.last_extracted_song = ""
+        self.extracted_song = ""
