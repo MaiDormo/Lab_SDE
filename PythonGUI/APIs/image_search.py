@@ -7,7 +7,6 @@ def perform_image_search(query: str) -> (str | None):
     try:
         results = DDGS().images(
                 keywords=query,
-                safesearch="moderate",
                 max_results=1,  
             )
     except:
