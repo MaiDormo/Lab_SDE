@@ -14,5 +14,9 @@ def perform_image_search(query: str) -> (str | None):
     except:
         print("Error in requesting the image")
 
-    return results
+    if results and len(results) > 0:
+        # Estrai l'URL dell'immagine dal primo risultato
+        image_url = results[0].get('image', None)  # Cambia 'image' se la chiave è diversa
+        return image_url
+    return None
     
