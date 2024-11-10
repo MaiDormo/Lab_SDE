@@ -2,6 +2,8 @@ import os, sys
 from fastapi.responses import FileResponse
 import neuralspace as ns
 from typing import Dict, Any
+sys.path.append('./PythonGUI')
+from APIs import select_music
 import hashlib
 
 
@@ -9,10 +11,22 @@ import hashlib
 def extract_song(song: FileResponse, path: str) -> str:
     """This function takes the MP3 song and rewrites it inside a specific folder,
         returns the generated name (it's implemented as a hash of the song name)"""
-    print(f"name of the song is: {song.filename}")
-    filename = hashlib.md5(song.filename.encode()).hexdigest()
+    filename = hashlib.md5(song.content).hexdigest()
     with open(f"{path}/{filename}.mp3", "wb") as f:
         f.write(song.content)
+    return filename
+
+def import_song(song_name: str, path: str) -> str:
+    ret_val = select_music.importSong(song_name)
+    
+    if ret_val == 1:
+        return 1
+
+    # Generate a unique filename based on the song name
+    filename = hashlib.md5(song_name.encode()).hexdigest()
+    
+    with open(f"{path}/{filename}.mp3", "wb") as f:
+        f.write(ret_val.content)
     return filename
 
 
