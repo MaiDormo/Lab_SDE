@@ -1,8 +1,9 @@
-import sys
-import os
 from API_Output_Manipulation import functions
 from fastapi.responses import FileResponse
 import pathlib
+import sys
+
+sys.path.append('./PythonGUI')
 from APIs import download_image, image_search, list_music, select_music
 
 # You have available the following functions
@@ -29,10 +30,10 @@ In LAB Exercise:
     thus completing all of the APIs calls shown before.
 """
 def main():
-    song_list = list_music.listAvailableMusic() #this function can be found inside PythonGUI/APIs/select_music.py
+    song_list = list_music.listAvailableMusic() #this function can be found inside PythonGUI/APIs/list_music.py
     print(song_list)
 
-    selected_song: FileResponse = select_music.importSong(song_list[0]) #this function can be found inside PythonGUI/APIs/select_music.py
+    selected_song = select_music.importSong(song_list[0]) #this function can be found inside PythonGUI/APIs/select_music.py
 
     # Insert a call to the function extract_song() which can be found inside the functions.py file
     # It takes as input a song: FileResponse and the SONG_PATH, and returns a filename
@@ -42,6 +43,11 @@ def main():
     # It takes as input a SONG_PATH and the name (filename) of a song, returning the text of the song (song_text)
     # ----------------------------------------- WRITE HERE --------------------------------------------------
 
+    # Line that should be added by the student
+    filename = functions.extract_song(selected_song, SONG_PATH)
+    # filename = functions.import_song(song_chosen, SONG_PATH)
+    song_text = functions.speech_to_text(SONG_PATH, filename)
+
     url = image_search.perform_image_search(song_text) #this function can be found inside PythonGUI/APIs/select_music.py
     print(url)
 
@@ -49,9 +55,7 @@ def main():
 
     print("Process completed!")
 
-    # Line that should be added by the student
-    # filename = functions.extract_song(selected_song, SONG_PATH)
-    # song_text = functions.speech_to_text(SONG_PATH, filename)
+    
 
 
 if __name__ == "__main__":
