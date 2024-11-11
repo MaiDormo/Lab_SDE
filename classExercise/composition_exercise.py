@@ -43,11 +43,6 @@ def main():
     # It takes as input a SONG_PATH and the name (filename) of a song, returning the text of the song (song_text)
     # ----------------------------------------- WRITE HERE --------------------------------------------------
 
-    # Line that should be added by the student
-    filename = functions.extract_song(selected_song, SONG_PATH)
-    # filename = functions.import_song(song_chosen, SONG_PATH)
-    song_text = functions.speech_to_text(SONG_PATH, filename)
-
     url = image_search.perform_image_search(song_text) #this function can be found inside PythonGUI/APIs/select_music.py
     print(url)
 
