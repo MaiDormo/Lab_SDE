@@ -48,12 +48,12 @@ def main():
     # Step 3: Extract the song to the specified path
     # Insert a call to the function extract_song() which can be found inside the functions.py file
     # It takes as input a song (FileResponse) and the SONG_PATH, and returns a filename
-    filename = functions.extract_song(selected_song, SONG_PATH)
+    # --------------------- WRITE YOUR CODE HERE ---------------------
 
     # Step 4: Convert the song to text (lyrics)
     # Insert a call to the function speech_to_text() which can be found inside the API_Output_Manipulation/functions.py file
     # It takes as input the SONG_PATH and the name (filename) of the song, returning the text of the song (song_text)
-    song_text = functions.speech_to_text(SONG_PATH, filename)
+    # --------------------- WRITE YOUR CODE HERE ---------------------
 
     # Step 5: Perform an image search based on the extracted text
     url = image_search.perform_image_search(song_text)  # This function can be found inside PythonGUI/APIs/image_search.py
