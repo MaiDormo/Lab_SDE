@@ -25,3 +25,4 @@ typing_extensions==4.12.2
 urllib3==2.2.3
 uvicorn==0.32.0
 websocket-client==1.8.0
+duckduckgo_search==6.3.3
